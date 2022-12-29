@@ -55,45 +55,55 @@ android {
 }
 
 task buildSDL2 {
-	exec {
-		workingDir "../../"
-		commandLine "./build-SDL2.sh"
+	doLast {
+		exec {
+			workingDir "../../"
+			commandLine "./build-SDL2.sh"
+		}
 	}
 }
 
 task buildGame {
 	dependsOn buildSDL2
-	exec {
-		workingDir "../../"
-		commandLine "./build-colorful.sh"
+	doLast {
+		exec {
+			workingDir "../../"
+			commandLine "./build-colorful.sh"
+		}
 	}
 }
 
 task copyLibs {
 	dependsOn buildSDL2, buildGame
-	copy {
-		from "../../build/lib"
-		into "src/main/jniLibs"
+	doLast {
+		copy {
+			from "../../build/lib"
+			into "src/main/jniLibs"
+		}
 	}
 }
 
 task buildAssets {
-	exec {
-		workingDir "../../"
-		commandLine "./build-assets.sh"
+	doLast {
+		exec {
+			workingDir "../../"
+			commandLine "./build-assets.sh"
+		}
 	}
 }
 
 task copyAssets {
 	dependsOn buildAssets
-	copy {
-		from "../../colorful/build/"
-		include "**/*.png"
-		include "**/*.ogg"
-		include "**/*.txt"
-		exclude "obj/*"
-		includeEmptyDirs = false
-		into "src/main/assets"
+	doLast {
+		copy {
+			from "../../colorful/build/"
+			include "**/*.png"
+			include "**/*.ogg"
+			include "**/*.txt"
+			exclude "obj/*"
+			includeEmptyDirs = false
+			into "src/main/assets"
+		}
 	}
 }
 
