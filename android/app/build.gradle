@@ -45,8 +45,52 @@ android {
     }
 }
 
-dependencies {
+task buildSDL2 {
+	exec {
+		workingDir "../../"
+		commandLine "./build-SDL2.sh"
+	}
+}
 
+task buildGame {
+	dependsOn buildSDL2
+	exec {
+		workingDir "../../"
+		commandLine "./build-colorful.sh"
+	}
+}
+
+task copyLibs {
+	dependsOn buildSDL2, buildGame
+	copy {
+		from "../../build/lib"
+		into "src/main/jniLibs"
+	}
+}
+
+task buildAssets {
+	exec {
+		workingDir "../../"
+		commandLine "./build-assets.sh"
+	}
+}
+
+task copyAssets {
+	dependsOn buildAssets
+	copy {
+		from "../../colorful/build/"
+		include "**/*.png"
+		include "**/*.ogg"
+		include "**/*.txt"
+		exclude "obj/*"
+		includeEmptyDirs = false
+		into "src/main/assets"
+	}
+}
+
+assemble.dependsOn(copyLibs, copyAssets)
+
+dependencies {
 	implementation 'androidx.appcompat:appcompat:1.2.0'
 	implementation 'com.google.android.material:material:1.3.0'
 	testImplementation 'junit:junit:4.+'
