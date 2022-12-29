@@ -38,11 +38,6 @@ if [[ "${CLEAN}" -eq 1 ]]; then
 	rm -rf "${SCRIPT_DIR}/android/app/build"
 fi
 
-# -- create symlinks to hook up required files
-
-ln -srnf SDL2/android-project/app/src/main/java/org \
-	android/app/src/main/java/org
-
 # -- trigger a Gradle build
 
 cd "${SCRIPT_DIR}/android"
