@@ -83,6 +83,12 @@ task copyLibs {
 	}
 }
 
+task cleanLibs(type: Delete) {
+	delete "../../build"
+	delete "src/main/jniLibs"
+	followSymlinks = false
+}
+
 task buildAssets {
 	doLast {
 		exec {
@@ -107,7 +113,17 @@ task copyAssets {
 	}
 }
 
+task cleanAssets(type: Delete) {
+	delete "../../colorful/build/gfx"
+	delete "../../colorful/build/map"
+	delete "../../colorful/build/sfx"
+	delete "../../colorful/build/slides"
+	delete "src/main/assets"
+	followSymlinks = false
+}
+
 assemble.dependsOn(copyLibs, copyAssets)
+clean.dependsOn(cleanLibs, cleanAssets)
 
 dependencies {
 	implementation 'androidx.appcompat:appcompat:1.2.0'

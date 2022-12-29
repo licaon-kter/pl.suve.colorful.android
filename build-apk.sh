@@ -31,17 +31,19 @@ if [[ -z "${ANDROID_SDK_ROOT+isset}" ]]; then
 	exit 1
 fi
 
-# -- clean, if requested
-
-if [[ "${CLEAN}" -eq 1 ]]; then
-	rm -rf "${SCRIPT_DIR}/android/build"
-	rm -rf "${SCRIPT_DIR}/android/app/build"
-fi
-
-# -- trigger a Gradle build
+# -- initialize Gradle
 
 cd "${SCRIPT_DIR}/android"
 ./gradlew
+
+# -- clean, if requested
+
+if [[ "${CLEAN}" -eq 1 ]]; then
+	./gradlew clean
+fi
+
+# -- trigger the build
+
 ./gradlew build
 
 # -- copy the resulting .apk to current dir
