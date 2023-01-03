@@ -122,8 +122,13 @@ task cleanAssets(type: Delete) {
 	followSymlinks = false
 }
 
-assemble.dependsOn(copyLibs, copyAssets)
-clean.dependsOn(cleanLibs, cleanAssets)
+// The "assembleDebug" and "assembleRelease" tasks are dynamically created,
+// so we need to defer adding dependencies to them
+afterEvaluate {
+	assembleDebug.dependsOn(copyLibs, copyAssets)
+	assembleRelease.dependsOn(copyLibs, copyAssets)
+	clean.dependsOn(cleanLibs, cleanAssets)
+}
 
 dependencies {
 	implementation 'androidx.appcompat:appcompat:1.2.0'
