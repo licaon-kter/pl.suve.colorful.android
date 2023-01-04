@@ -28,8 +28,8 @@ android {
 	sourceSets {
 		main {
 			java {
-				srcDir "src/"
-				srcDir "../../SDL2/android-project/app/src/main/java/org"
+				srcDir "src/main/java"
+				srcDir "../../SDL2/android-project/app/src/main/java"
 			}
 		}
 	}
